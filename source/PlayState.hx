@@ -321,6 +321,16 @@ class PlayState extends MusicBeatState
 					curStage = 'school';
 				case 'thorns':
 					curStage = 'schoolEvil';
+				case 'dont-mine-at-night':
+					curStage = 'minecraft';
+				case 'super-sonic-racing':
+					curStage = 'checker';
+				case 'rockslide-rumble':
+					curStage = 'crashStage';
+				case 'break-my-mind':
+					curStage = 'fnafStage';
+				case 'spooky-scary-skeletons':
+					curStage = 'skeletonStage';
 				default:
 					curStage = 'stage';
 			}
