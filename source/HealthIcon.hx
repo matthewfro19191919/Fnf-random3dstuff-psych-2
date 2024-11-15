@@ -19,6 +19,23 @@ class HealthIcon extends FlxSprite
 		this.isPlayer = isPlayer;
 		changeIcon(char);
 		scrollFactor.set();
+		switch (char) {
+			case 'steve':
+				loadGraphic(Paths.image('icons/steve'), true, 150, 150);
+				animation.add('ronsip', [0, 1], 0, false, isPlayer);
+			case 'doll':
+				loadGraphic(Paths.image('icons/doll'), true, 150, 150);
+				animation.add('ronsip-ex', [0, 1], 0, false, isPlayer);
+			case 'crash':
+				loadGraphic(Paths.image('icons/crash'), true, 150, 150);
+				animation.add('ronsip-ex', [0, 1], 0, false, isPlayer);
+			case 'endo':
+				loadGraphic(Paths.image('icons/endo'), true, 150, 150);
+				animation.add('gloopy', [0, 1], 0, false, isPlayer);
+			case 'skeleton':
+				loadGraphic(Paths.image('icons/skeleton'), true, 150, 150);
+				animation.add('gloopy-ex', [0, 1], 0, false, isPlayer);
+		}
 	}
 
 	override function update(elapsed:Float)
