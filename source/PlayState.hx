@@ -1929,6 +1929,9 @@ class PlayState extends MusicBeatState
 			testNote.sPlane.y += 1;
 			trace(testNote.sPlane.y);
 		}*/
+
+		// DD: 3D Views need updating
+		Main.modelView.update();
 		
 
 		callOnLuas('onUpdate', [elapsed]);
@@ -2531,6 +2534,11 @@ class PlayState extends MusicBeatState
 		setOnLuas('botPlay', PlayState.cpuControlled);
 		callOnLuas('onUpdatePost', [elapsed]);
 		#end
+
+		// if (FlxG.keys.justPressed.Q)
+		// {
+		// 	Main.modelView.thingy = true;
+		// }
 	}
 
 	public static function copyInfo(){
@@ -3876,6 +3884,14 @@ class PlayState extends MusicBeatState
 			luaArray[i].stop();
 		}
 		luaArray = [];
+		if (dad.model != null)
+			dad.model.begoneEventListeners();
+
+		Main.modelView.clear();
+		for (i in 0...Main.modelView.addedModels.length)
+			Main.modelView.addedModels[i].destroy();
+		Main.modelView.addedModels.resize(0);
+
 		super.destroy();
 	}
 
