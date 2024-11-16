@@ -779,6 +779,8 @@ class PlayState extends MusicBeatState
 		dad = new Character(0, 0, SONG.player2);
 		startCharacterPos(dad, true);
 		dadGroup.add(dad);
+		if (dad.isModel)
+			dad.visible = false;
 
 		boyfriend = new Boyfriend(0, 0, SONG.player1);
 		startCharacterPos(boyfriend);
@@ -1337,6 +1339,8 @@ class PlayState extends MusicBeatState
 		if(startedCountdown) {
 			callOnLuas('onStartCountdown', []);
 			return;
+		if (dad.isModel)
+			dad.visible = true;
 		}
 
 		inCutscene = false;
@@ -1887,6 +1891,20 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
+		// DD: Gotta wait for models to load cuz Away3D/OpenFL does it in a jank way
+		// Load models one at a time or else the engine mixes up model/texture loading
+		if (dad.isModel && !dad.beganLoading)
+		{
+			dad.beganLoading = true;
+			dad.model = new ModelThing(dad.modelType, dad.modelName, Main.modelView, dad.modelScale, dad.modelSpeed, dad.initYaw, dad.initPitch, dad.initRoll,
+				1, dad.initX, dad.initY, dad.initZ, dad.noLoopList, dad.md5Anims);
+			return;
+		}
+		else if (dad.isModel && dad.beganLoading && !dad.model.fullyLoaded)
+		{
+			return;
+		}
+
 		/*if (FlxG.keys.justPressed.NINE)
 		{
 			iconP1.swapOldIcon();
@@ -2227,6 +2245,30 @@ class PlayState extends MusicBeatState
 					daNote.visible = true;
 					daNote.active = true;
 				}
+				var altAnim:String = "";
+
+				// if (SONG.notes[Math.floor(curStep / 16)] != null)
+				// {
+				// 	if (SONG.notes[Math.floor(curStep / 16)].altAnim)
+				// 		altAnim = '-alt';
+				// }
+
+				// trace("DA ALT THO?: " + SONG.notes[Math.floor(curStep / 16)].altAnim);
+
+				if (dad.canAutoAnim && (!dad.isModel || !daNote.isSustainNote))
+				{
+					switch (Math.abs(daNote.noteData))
+					{
+						case 2:
+							dad.playAnim('singUP' + altAnim, true);
+						case 3:
+							dad.playAnim('singRIGHT' + altAnim, true);
+						case 1:
+							dad.playAnim('singDOWN' + altAnim, true);
+						case 0:
+							dad.playAnim('singLEFT' + altAnim, true);
+					}
+				}
 
 				// i am so fucking sorry for this if condition
 				var strumX:Float = 0;
@@ -2321,12 +2363,40 @@ class PlayState extends MusicBeatState
 					} else if(!daNote.noAnimation) {
 						var altAnim:String = "";
 
-						if (SONG.notes[Math.floor(curStep / 16)] != null)
-						{
-							if (SONG.notes[Math.floor(curStep / 16)].altAnim || daNote.noteType == 'Alt Animation') {
-								altAnim = '-alt';
-							}
-						}
+		if (SONG.notes[Math.floor(curStep / 16)] != null)
+		{
+			if (SONG.notes[Math.floor(curStep / 16)].changeBPM)
+			{
+				Conductor.changeBPM(SONG.notes[Math.floor(curStep / 16)].bpm);
+				FlxG.log.add('CHANGED BPM!');
+			}
+			else
+				Conductor.changeBPM(SONG.bpm);
+
+			// Dad doesnt interupt his own notes
+			var goodTime = (dad.isModel ? !dad.model.currentAnim.contains('sing') : !dad.animation.curAnim.name.contains('sing'));
+			if (goodTime)
+			{
+				if (SONG.notes[Math.floor(curStep / 16)].mustHitSection)
+				{
+					if (dadBeats.contains(curBeat % 4) && dad.canAutoAnim)
+						dad.dance();
+				}
+				else if (!SONG.notes[Math.floor(curStep / 16)].mustHitSection)
+				{
+					if (dadBeats.contains(curBeat % 4) && dad.canAutoAnim)
+						if (dad.isModel && dad.model != null && dad.model.currentAnim.contains('idle'))
+							dad.dance();
+				}
+			}
+		}
+		else
+		{
+			if (dadBeats.contains(curBeat % 4))
+				dad.dance();
+		}
+		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
+
 
 						var animToPlay:String = '';
 						switch (Math.abs(daNote.noteData))
