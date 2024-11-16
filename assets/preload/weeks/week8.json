@@ -1,0 +1,66 @@
+{
+	"songs": [
+		[
+			"dont-mine-at-night",
+			"steve",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"super-sonic-racing",
+			"doll",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"rockslide-rumble",
+			"crash",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"break-my-mind",
+			"endo",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"spooky-scary-skeletons",
+			"skeleton",
+			[
+				146,
+				113,
+				253
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"storyName": "Your New Week",
+	"weekName": "Custom Week",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": true,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}
