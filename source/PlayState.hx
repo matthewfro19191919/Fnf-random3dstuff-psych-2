@@ -229,6 +229,9 @@ class PlayState extends MusicBeatState
 	public var inCutscene:Bool = false;
 	var songLength:Float = 0;
 
+	var dadBeats:Array<Int> = [0, 2];
+	var bfBeats:Array<Int> = [1, 3];
+
 	#if desktop
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
