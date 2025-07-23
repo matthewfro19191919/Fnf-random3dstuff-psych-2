@@ -1,7 +1,6 @@
 @echo off
 title Setup - PECG
 cd ..
-
 echo Installing dependencies, please wait...
 haxelib install lime 8.1.2
 haxelib install openfl 9.3.3
