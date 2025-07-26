@@ -45,6 +45,8 @@ class Main extends Sprite
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
+
+		modelView = new ModelView();
 	}
 
 	private function init(?E:Event):Void
@@ -90,7 +92,5 @@ class Main extends Sprite
 		FlxG.autoPause = false;
 		FlxG.mouse.visible = false;
 		#end
-
-		modelView = new ModelView();
 	}
 }
