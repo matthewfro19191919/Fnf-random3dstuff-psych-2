@@ -37,6 +37,8 @@ class Main extends Sprite
 	{
 		super();
 
+		modelView = new ModelView();
+
 		if (stage != null)
 		{
 			init();
@@ -45,8 +47,6 @@ class Main extends Sprite
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
-
-		modelView = new ModelView();
 	}
 
 	private function init(?E:Event):Void
