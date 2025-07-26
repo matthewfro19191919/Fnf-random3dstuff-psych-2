@@ -1339,12 +1339,11 @@ class PlayState extends MusicBeatState
 
 	public function startCountdown():Void
 	{
-		if(startedCountdown) {
+		if (startedCountdown)
 			callOnLuas('onStartCountdown', []);
 			return;
 		if (dad.isModel)
 			dad.visible = true;
-		}
 
 		inCutscene = false;
 		var ret:Dynamic = callOnLuas('onStartCountdown', []);
@@ -2062,6 +2061,9 @@ class PlayState extends MusicBeatState
 		}
 		super.update(elapsed);
 
+		// DD: 3D Views need updating
+		Main.modelView.update();
+
 		if(ratingString == '?') {
 			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingString;
 		} else {
@@ -2261,20 +2263,20 @@ class PlayState extends MusicBeatState
 
 				// trace("DA ALT THO?: " + SONG.notes[Math.floor(curStep / 16)].altAnim);
 
-				if (dad.canAutoAnim && (!dad.isModel || !daNote.isSustainNote))
-				{
-					switch (Math.abs(daNote.noteData))
+					if (dad.canAutoAnim && (!dad.isModel || !daNote.isSustainNote))
 					{
-						case 2:
-							dad.playAnim('singUP' + altAnim, true);
-						case 3:
-							dad.playAnim('singRIGHT' + altAnim, true);
-						case 1:
-							dad.playAnim('singDOWN' + altAnim, true);
-						case 0:
-							dad.playAnim('singLEFT' + altAnim, true);
+						switch (Math.abs(daNote.noteData))
+						{
+							case 2:
+								dad.playAnim('singUP' + altAnim, true);
+							case 3:
+								dad.playAnim('singRIGHT' + altAnim, true);
+							case 1:
+								dad.playAnim('singDOWN' + altAnim, true);
+							case 0:
+								dad.playAnim('singLEFT' + altAnim, true);
+						}
 					}
-				}
 
 				// i am so fucking sorry for this if condition
 				var strumX:Float = 0;
